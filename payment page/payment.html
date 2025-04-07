@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page</title>
+  <link rel="stylesheet" href="pay.css">
+</head>
+<body>
+
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <table id="cartTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Product 1</td>
+          <td>₹500</td>
+        </tr>
+        <tr>
+          <td>Product 2</td>
+          <td>₹300</td>
+        </tr>
+        <tr>
+          <td>Product 3</td>
+          <td>₹200</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total">
+      <h3>Total: ₹1000</h3>
+    </div>
+
+    <hr />
+
+    <h2>Payment</h2>
+    <form id="paymentForm">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" required />
+      </div>
+
+      <div>
+        <label for="paymentMethod">Choose Payment Method:</label>
+        <select id="paymentMethod" required>
+          <option value="upi">UPI</option>
+          <option value="creditCard">Credit Card</option>
+        </select>
+      </div>
+
+      <!-- UPI Payment Fields -->
+      <div id="upiFields">
+        <label for="upi">UPI ID:</label>
+        <input type="text" id="upi" placeholder="Enter your UPI ID" required />
+        <small>Example: yourname@upi</small>
+      </div>
+
+      <!-- Credit Card Payment Fields -->
+      <div id="creditCardFields" style="display: none;">
+        <div>
+          <label for="cardNumber">Credit Card Number:</label>
+          <input type="text" id="cardNumber" placeholder="Enter your card number" required />
+        </div>
+        <div>
+          <label for="expiryDate">Expiry Date (MM/YY):</label>
+          <input type="text" id="expiryDate" placeholder="MM/YY" required />
+        </div>
+        <div>
+          <label for="cvv">CVV:</label>
+          <input type="text" id="cvv" placeholder="Enter your CVV" required />
+        </div>
+      </div>
+
+      <div>
+        <button type="submit">Pay ₹1000</button>
+      </div>
+    </form>
+
+    <div id="paymentMessage" style="display: none;">
+      <p>Payment successful! Thank you for your purchase.</p>
+    </div>
+  </div>
+
+<script>
+  // Payment form submission event
+  document.getElementById('paymentForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get form values
+    const name = document.getElementById('name').value;
+    const paymentMethod = document.getElementById('paymentMethod').value;
+
+    // Validate UPI or Credit Card based on selected method
+    if (paymentMethod === 'upi') {
+      const upiID = document.getElementById('upi').value;
+      const upiRegex = /^[a-zA-Z0-9_.-]+@[a-zA-Z]{2,4}$/;
+      
+      if (!upiRegex.test(upiID)) {
+        alert("Please enter a valid UPI ID (e.g., yourname@upi).");
+        return;
+      }
+    } else if (paymentMethod === 'creditCard') {
+      const cardNumber = document.getElementById('cardNumber').value;
+      const expiryDate = document.getElementById('expiryDate').value;
+      const cvv = document.getElementById('cvv').value;
+
+      // Validate Credit Card inputs
+      const cvvRegex = /^\d{3}$/;
+      const cardNumberRegex = /^\d{16}$/; // Basic validation for 16-digit card number
+
+      if (!cardNumberRegex.test(cardNumber)) {
+        alert("Please enter a valid 16-digit credit card number.");
+        return;
+      }
+
+      if (!cvvRegex.test(cvv)) {
+        alert("Please enter a valid 3-digit CVV.");
+        return;
+      }
+
+      // Expiry date validation (MM/YY format)
+      const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+      if (!expiryDateRegex.test(expiryDate)) {
+        alert("Please enter a valid expiry date in MM/YY format.");
+        return;
+      }
+    }
+
+    // If validation passes, show payment success message
+    document.getElementById('paymentMessage').style.display = "block";
+    document.getElementById('paymentForm').reset(); // Reset the form after submission
+  });
+
+  // Display payment method fields based on selection
+  document.getElementById('paymentMethod').addEventListener('change', function() {
+    const paymentMethod = this.value;
+
+    if (paymentMethod === 'upi') {
+      document.getElementById('upiFields').style.display = 'block';
+      document.getElementById('creditCardFields').style.display = 'none';
+    } else {
+      document.getElementById('creditCardFields').style.display = 'block';
+      document.getElementById('upiFields').style.display = 'none';
+    }
+  });
+
+  // Trigger change event to display the correct fields initially
+  document.getElementById('paymentMethod').dispatchEvent(new Event('change'));
+</script>
+
+</body>
+</html>
