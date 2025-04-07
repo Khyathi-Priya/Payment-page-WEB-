@@ -7,6 +7,8 @@ This payment page consists two type of payment
 -> UPI
 -> Credit card
 
+Here i added javascript code in html page only.
+
 The payment page consists of a form where users can enter necessary payment information, including:
 
     Card number
