@@ -3,12 +3,17 @@ Payment page
 This project demonstrates how to create a functional and simple Payment Page using HTML, CSS, and JavaScript. The page allows users to input their payment details and simulate a payment process. The project includes form validation, responsive design for various screen sizes, and a simple user interface that provides an easy-to-use payment experience.
 Project Overview
 
+This payment page consists two type of payment
+-> UPI
+-> Credit card
+
 The payment page consists of a form where users can enter necessary payment information, including:
 
     Card number
     Expiration Date
     CVV/CVC
     Name on Card
+    UPI ID
     
 Once the user fills out the form, JavaScript ensures that the input is correct by performing validation checks on each field before allowing the form submission. The form also uses CSS for styling, making it visually appealing and mobile-friendly.
 Key Features:
@@ -16,12 +21,10 @@ Key Features:
     Input Fields:
 
         Card Number (validates the format of the card number).
-
         Expiration Date (ensures the date is in the future).
-
         CVV (ensures the correct length).
-
         Name on Card (optional field for the user's name).
+        UPI ID (ensure the upi id is in mail format)
 
     Validation Logic: JavaScript functions that validate user input before submission, ensuring the data is correct and formatted properly.
 
@@ -40,6 +43,7 @@ Technologies Used
     JavaScript: Handles the form validation process, checking the format and values of user input before submission.
 
 How It Works
+
 1. HTML Structure
 
     The index.html file contains the basic structure of the page, which includes a form with input fields for credit card information.
